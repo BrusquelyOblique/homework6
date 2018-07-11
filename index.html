@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Quoth the Giphy</title>
+</head>
+
+<body>
+  <div id="buttons">
+    
+    <button data-person="patrick stewart">
+      All Hands on Deck!
+    </button>
+    <button data-person="sly stallone">
+      Adriaaaaaaaan!!!!
+    </button>
+    <button data-person="kelsey grammer">
+      I'm listening...
+    </button>
+
+    <button data-person="al bundy">
+      4 touchdowns in a single game!
+    </button>
+
+    <button data-person="beavis">
+      Are you threatening me?!
+    </button>
+
+    <button data-person="butthead">
+      That would be cool.
+    </button>
+
+    <button data-person="ren and stimpy">
+      You Idiot!
+    </button>
+
+    <button data-person="neil patrick harris">
+      Legen..wait for it...dairy
+    </button>
+
+    <button data-person="homer simpson">
+      D'oh
+    </button>
+    <button data-person="predator">
+      What the hell are you?
+    </button>
+    <div class='giphy'>
+        <form action="">
+            <div>
+                <input type='text' placeholder="search" name = 'search' id = 'search'>
+            </div>   
+            <button class = 'giphy_button'>Search Giphy.com</button>
+        </form> 
+    </div>
+   
+
+  </div>
+
+  <div id="gifs-appear-here">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $("button").on("click", function() {
+      var person = $(this).attr("data-person");
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        person + "&api_key=dc6zaTOxFJmzC&limit=10";
+   
+   /*
+    //Below is the attempt to add a button corresponding to the search text box input
+    function addButton(text){
+            var button = $('<button>');
+                button.html(text);
+            return button;
+        }
+   //Below is the attempt to get the seach button to work
+        function searchGiphy(event){
+        
+        event.preventDefault;
+       var value = $('#search').val();
+       $(".giphy_buttons").append[addButton(value)];
+       $('#search').val('');
+    };
+        
+        $(".giphy_buttons").on("click",searchGiphy)   
+   //Below is a functoin to use the value entered in the text box to search giphy with the api
+    function grabGiphy(val){
+        $.ajax({
+            url: "https://api.giphy.com/v1/gifs/search?q=" +    
+            val + "&api_key=dc6zaTOxFJmzC&limit=10";
+            method:'GET'
+        })
+            .done(function(data)){
+                console.log('Data', data);
+            })
+            .fail(function(error){
+                console.log('error:', error);
+            });
+    };
+
+    //Below function is to display the searched gif
+    function displayGif(){
+        //must callback the input from the grabGiphy function
+        //create a for loop that procedes through until the list length of the items returned by grabGiphy is reached
+        //appended each item returned by grabGiphy to the corresponding div
+    }
+
+
+*/
+
+
+
+
+
+
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+        .then(function(response) {
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div class='item'>");
+
+            var rating = results[i].rating;
+
+            var p = $("<p>").text("Rating: " + rating);
+
+            var personImage = $("<img>");
+            personImage.attr("src", results[i].images.fixed_height.url);
+
+            gifDiv.prepend(p);
+            gifDiv.prepend(personImage);
+
+            $("#gifs-appear-here").prepend(gifDiv);
+          }
+        });
+  /* Below is the if condition that will determin whether or not the gif is in a paused state or not
+  // if it is paused, the gif is replaced with the gif from the start
+      if (state === "still"){
+      $(this).attr('src', src.replace('.gif', 'data-still'));
+      }
+        else if (state !== "still") {
+          $(this).attr('src', src.replace('.gif', 'data-animate')); 
+        }
+      
+      */
+      
+    });
+  </script>
+</body>
+
+</html>
